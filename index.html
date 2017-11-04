@@ -1,0 +1,313 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>1028_class</title>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <style>
+    .box{
+      width: 10px;
+      height: 10px;
+  
+        }
+    </style>
+</head>
+<body>
+    
+   
+
+    <script>
+        
+        
+//    var arr = [85, 60, 99, 49, 77, 59];
+//    var body=d3.select("body");
+//    for(var i=0 ; i<arr.length ; i++ ){
+//        body.append("div")
+//            .datum(arr[i]) 
+//        }
+//        
+//        d3.selectAll("div").text(function(data1)
+//            {return data1;}) 
+//        
+//        console.log(d3.selectAll("div") );
+    
+ 
+        
+//    var arr = [85, 60, 99, 49, 77, 59];
+//    var body=d3.select("body");
+//        body.selectAll("div")
+//        .data(arr);
+//        
+//         d3.selectAll("div")
+//             .text(function(data1)
+//            {return data1;
+//            }) 
+//        
+//         console.log(d3.selectAll("div") );
+
+      var arr = [85, 60, 99, 49, 77, 59];
+      bind(arr);
+      render();  
+        
+        function bind(arr){
+                
+                var body=d3.select("body");  
+        
+                var selection=body.selectAll("div")
+                                  .data(arr);
+        
+                selection.enter().append("div");
+                selection.exit().remove("div");}
+        
+      
+        function render(){ d3.selectAll("div")
+                             .text(function(d,i)
+                                   {return (i+1)+":"+d;
+                          }).style({"color":function(d){
+                                            if(d<70){return"red"}
+                                            else{return"black"}
+                                                        }
+                                
+                                    }) 
+                         }
+       
+        
+      console.log(d3.selectAll("div") );  
+       
+         
+    
+    </script>
+  
+ <hr>  
+     
+ <input type="button" value="Add"
+        onclick= "update()" style="position:relative; left:220px; top: -20px; " >
+ <input type="button" value="Remove"
+        onclick="kickitem()"  style="position:relative;  left:240px; top: -20px; ">  
+        
+    <script>
+        
+    function random(N,M){
+        return Math.floor(Math.random()*(M-N+1)+N);
+    }    
+    function update(){
+        var num = random(10,100);
+        arr.push(num);
+        bind(arr);
+        render();
+        
+    }    
+    function kickitem(){
+        var num = random(10,100);
+        arr.shift(num);
+        bind(arr);
+        render();
+        
+    }        
+        
+    var arr = [85, 60, 99, 49, 77, 59];
+    var w = 500 , h = 300 , p=100 ;
+        
+    svg();
+    bind(arr);
+    render();
+    
+    function svg(){
+        d3.select("body").append("svg")
+            .attr({
+            "id":"barchart",
+            "width":w,
+            "height":h 
+        })
+    }
+
+        
+    function bind(arr){
+        var svg=d3.select("#barchart"); 
+        var selection=svg.selectAll("rect")
+                         .data(arr);
+        selection.enter().append("rect");
+        selection.exit().remove();
+        
+        var selection_t=svg.selectAll("text")
+                         .data(arr);
+        selection_t.enter().append("text");
+        selection_t.exit().remove();}
+        
+
+        
+      
+        
+    function render(){ d3.selectAll("#barchart rect")
+                        .attr({
+                        x:function(d,i){
+                            return p+43*i;},
+                        y:function(d){
+                            return h-p-d },
+                        width:40 ,
+                        height:function(d){
+                                return d;},
+                        fill:function(d){
+                            if(d<70){
+                                return "red"
+                            }
+                            else{
+                                return"lightgreen"
+                            }
+                        }
+    })
+
+    d3.selectAll("#barchart text")
+                        .attr({
+                        x:function(d,i){
+                            return p+43*i+20;},
+                        y:h-p+20 ,
+                       "text-anchor" : "middle"
+                            }).text(function(d){
+                                    return d;
+    })
+                                 
+                     }
+       
+    
+        
+    
+        
+      console.log(d3.selectAll("svg") );  
+           
+    
+    </script>
+<!--
+<hr>
+
+        
+    <script>
+        
+    function random2(N,M){
+        var rScale2 = d3.scale.linear()
+                        .domain([0,1])
+                        .rangeRound([N,M+1]);
+                    return rScale2(Math.random());
+    }    
+        
+                
+        
+    var arr2 = [85,60,99,49,77,59];
+    var w = 500 , h = ˋ0 , p=210 ;
+        
+    svg2();
+    bind2(arr2);
+    render2();
+    
+    function svg2(){
+        d3.select("body").append("svg")
+            .attr({
+            "id":"barchart2",
+            "width":w,
+            "height":h 
+        })
+    }
+
+        
+    function bind2(arr2){
+        var svg2=d3.select("#barchart2"); 
+        var selection2=svg2.selectAll("rect")
+                         .data(arr2);
+        selection2.enter().append("rect");
+        selection2.exit().remove();
+        
+        var selection2_t=svg2.selectAll("text")
+                         .data(arr2);
+        selection2_t.enter().append("text");
+        selection2_t.exit().remove();}
+        
+
+        
+      
+        
+    function render2(){ 
+                        var yScale2 = d3.scale.linear()
+                                    .domain([d3.min(arr2),d3.max(arr2)])
+                                    .range([10,150])
+                        
+                        d3.selectAll("#barchart2 rect")
+                        .attr({
+                        x:function(d,i){
+                            return p+43*i;},
+                        y:function(d){
+                            return h-p-yScale2(d) },
+                        width:40 ,
+                        height:function(d){
+                                return yScale2(d);},
+                        fill:function(d){
+                            if(yScale2(d)<70){
+                                return "red"
+                            }
+                            else{
+                                return"lightgreen"
+                            }
+                        }
+    })
+
+    d3.selectAll("#barchart2 text")
+                        .attr({
+                        x:function(d,i){
+                            return p+43*i+20;},
+                        y:h-p+20 ,
+                       "text-anchor" : "middle"
+                            }).text(function(d){
+                                    return d;
+    })
+                                 
+                     }
+       
+    
+        
+    
+        
+      console.log(d3.selectAll("svg") );  
+           
+    
+    </script>
+    
+-->
+    <hr>
+    
+    <script>
+    
+    var index = ["中國國民黨", "民主進步黨", "時代力量", "無黨團結聯盟", "親民黨"]; 
+    var color = ["blue" , "green" , "yellow" , "gray" , "orange"]
+    var xScale = d3.scale.ordinal()
+                        .domain(index)
+                          .range(color);
+        
+    console.log(xScale("中國國民黨"));
+    console.log(xScale("民主進步黨"));
+    console.log(xScale("時代力量"));
+    console.log(xScale("無黨團結聯盟"));
+    console.log(xScale("親民黨"));
+  for(var i=0 ;i<5; i++ ) { d3.selectAll("body").append("text").text(xScale(i)+" ,");}
+  
+           
+    </script>
+    
+    
+    
+<!--
+    <script>
+    var fScale = d3.scale.category20();
+        for(var i =0 ; i<40; i++){ 
+            d3.select( "body")
+            .append( "div") 
+            .attr( "class", "box") 
+            .style( "background",fScale(i)); }
+    </script>
+-->
+
+
+
+
+
+
+</body>
+</html>
