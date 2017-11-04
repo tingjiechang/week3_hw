@@ -274,19 +274,19 @@
     <hr>
     
     <script>
-    
+    var arr3 = ["中國國民黨", "民主進步黨", "時代力量", "無黨團結聯盟", "親民黨"]; 
     var index = ["中國國民黨", "民主進步黨", "時代力量", "無黨團結聯盟", "親民黨"]; 
     var color = ["blue" , "green" , "yellow" , "gray" , "orange"]
     var xScale = d3.scale.ordinal()
-                        .domain(index)
-                          .range(color);
+                   .domain(index)
+                   .range(color);
         
     console.log(xScale("中國國民黨"));
     console.log(xScale("民主進步黨"));
     console.log(xScale("時代力量"));
     console.log(xScale("無黨團結聯盟"));
     console.log(xScale("親民黨"));
-  for(var i=0 ;i<5; i++ ) { d3.selectAll("body").append("text").text(xScale(i)+" ,");}
+  for(var i=0 ;i<5; i++ ) { d3.selectAll("body").append("text").text(arr3[i]+" "+xScale(i)+" ,");}
   
            
     </script>
